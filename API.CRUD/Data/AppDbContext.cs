@@ -1,4 +1,4 @@
-﻿using API.CRUD.Models;
+﻿using API.CRUD.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,17 @@ namespace API.CRUD.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Fornecedor>(
+                f =>
+                {
+                    f.HasKey(f => f.Id);
+                    f.Property(f => f.Id).ValueGeneratedOnAdd().IsRequired();
+                    f.Property(f => f.Nome).HasMaxLength(100).IsRequired();
+                    f.Property(f => f.Documento).HasMaxLength(14).IsRequired();
+                    f.Property(f => f.Ativo).IsRequired();
+                }
+            );
         }
     }
 }
